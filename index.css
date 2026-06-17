@@ -1,0 +1,61 @@
+:root {
+    --canvas-width: 800px;
+    --canvas-height: 600px;
+}
+
+input[type=range] {
+    width: 500px ;
+}
+
+select {
+    width: 110px ;
+}
+
+#spaceParams {
+    width: 450px;
+}
+
+#oscilParams, 
+#recieverParams {
+    width: 300px;
+}
+
+#time, #info {
+    font-size: large;
+    margin-left: 50px;
+}
+
+.canvas-frame {
+    position: relative;
+    width: var(--canvas-width);
+    height: var(--canvas-height);
+} 
+
+#canvas,
+#canvas2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#canvas {
+    z-index: 2;
+}
+#canvas2 {
+    z-index: 1;
+}
+
+/* <!------------------ bottom panel ----------------> */
+.bottom-panel {
+   margin-top: 4px;
+   width: var(--canvas-width);
+} 
+
+.scene-textarea {
+    display: inline; 
+    height: 80px;
+    width: 500px
+}
+.scene-btn {
+    vertical-align: top; 
+}

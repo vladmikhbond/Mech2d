@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VawesTS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+      <h1>
+          Mech2d 
+          <span id="time"></span> 
+          <span id="info"> </span> 
+      </h1>
+<!-- ------------------top------------------  -->
+        <div>
+            <input id="spaceParams" type="text" value="size=500;  k=0.49;  loss=0.0" >
+
+            <select id="mode" aria-label="Select" required>
+                <option value="Inf" >Inf</option>
+                <option value="Sto">Sto</option>
+                <option value="Osc" selected >Osc</option>
+                <option value="Mon">Mon</option>
+                <option value="Rec">Rec</option>
+                <option value="Del">Del</option>
+            </select>     
+
+            <input id="oscilParams" type="text" value="amp=1;  q=0.25; vx=0" style="display: inline;">
+            <input id="recieverParams" type="text" value="loss=0.5" style="display: none;">
+
+            <button id="runButton" title="Run | Stop">Run</button>
+            <button id="dButton" title="2d | 3d">3d</button>
+            <button id="helpButton" title="Help" class="outline">H</button>
+        </div>
+
+
+<!-- ------------------cnvases------------------  -->
+<div class="canvas-frame">
+  <canvas id="canvas2" width="800" height="600" class="canvas-item"></canvas>
+  <canvas id="canvas" width="800" height="600" class="canvas-item"></canvas>
+</div>
+
+
+<!-- ------------------bottom------------------  -->
+<div class="bottom-panel">
+  <button id="saveSceneButton" class="scene-btn" title="Export scene">S</button>
+  <textarea id="savedSceneText" rows="1" class="scene-textarea"></textarea>
+  <button id="loadSceneButton" class="scene-btn" title="Import scene">L</button>
+</div>
+ 
+      <img src="./assets/redBall.png" id="redBallImg" width="523" height="520" style="display: none;" />
+      <img src="./assets/blueBall.png" id="blueBallImg" width="523" height="520" style="display: none;" />
+      <img src="./assets/greenBall.png" id="greenBallImg" width="146" height="145" style="display: none;" />
+      <img src="./assets/goldBall.png" id="goldBallImg" width="146" height="145" style="display: none;" />
+
+        <script type="module" src="main.js"></script>
+  </div>
+</body>
+</html>
+
+
+
+<!---------------------- top panel ---------------------->
+
+
+
