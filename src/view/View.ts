@@ -1,6 +1,6 @@
-import {glo, doc} from "./globals.js";
-import {Space} from "./Space.js";
-import { Geometry as G, Point } from "./Geometry.js";
+import {glo, doc} from "../globals.js";
+import {Space} from "../models/Space.js";
+import { Geometry as G, Point } from "../models/Geometry.js";
 
 
 export enum PrettyMode {Draft, Beauty};

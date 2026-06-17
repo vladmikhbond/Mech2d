@@ -1,4 +1,4 @@
-import { glo } from "./globals.js"; 
+import { glo } from "../globals.js"; 
 import { Geometry as G, Point} from "./Geometry.js"; 
 import { Space } from "./Space.js";  
 import { Link } from "./Link.js";
