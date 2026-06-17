@@ -2,6 +2,7 @@ import { glo, doc } from "../globals.js";
 import { Geometry as G, Point } from "../models/Geometry.js";
 import { Space, Mode, CreateMode } from "../models/Space.js";
 import { PrettyMode, TraceMode, View } from "../view/View.js";
+import { getSpaceParams } from "./params.js";
 
 export class Controller 
 {
@@ -28,5 +29,18 @@ export class Controller
         // this.addSpanClickListeners();
 
         // this.resetUI();  // last command of the constructor
+
+
+                // params changed 
+        document.getElementById("spaceParams")!.addEventListener("keydown", (e: KeyboardEvent) => 
+        {
+            if (e.key == "Enter") {
+                const [w, wk, k, g] = getSpaceParams()
+                glo.W = w; glo.Wk = wk; glo.K = k; glo.g = g; 
+                document.getElementById("helpButton")!.focus();
+            }
+                
+        });   
+
     }
 }

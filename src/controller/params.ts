@@ -13,17 +13,18 @@ export function getSpaceParams(): [number, number, number, number]
         return errMesage("Grammar error", defValue, paramsElement);
     }
     // перевірки
-    if (ps[0] == undefined || ps[0] < 100) 
-        return errMesage("Size must by >= 100", defValue, paramsElement);
+    if (ps[0] == undefined || ps[0] <= 0 || ps[0] > 1 ) 
+        return errMesage("W: 0 < W < 1", defValue, paramsElement);
 
-    if (ps[1] == undefined || ps[1] < 0 || ps[1] > ps[0] / 2 )
-        return errMesage("Margin: 0 < margin < size/2", defValue, paramsElement);
+    if (ps[1] == undefined || undefined || ps[0] <= 0 || ps[0] > 1 ) 
+        return errMesage("Wk: 0 < Wk < 1", defValue, paramsElement);
 
-    if (ps[2] == undefined || ps[2] < 0 || ps[2] > 1)
-        return errMesage("K: 0 < k < 1", defValue, paramsElement);
+    if (ps[2] == undefined || ps[2] <= 0 )
+        return errMesage("K: K > 0", defValue, paramsElement);
 
-    if (ps[3] == undefined || ps[3] < 0 || ps[3] > 1)
-        return errMesage("Loss: 0 < loss < 1", defValue, paramsElement);
+    if (ps[3] == undefined )
+       ps[3] == 0;
+
     paramsElement.style.backgroundColor = "";
     return ps;
 }
