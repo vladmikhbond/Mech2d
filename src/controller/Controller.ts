@@ -68,6 +68,33 @@ export class Controller
             //             this.mode == Mode.Rec ? "inline" : "none";            
         });       
 
+
+        // druft-pretty toggle
+        document.getElementById("prettyModeCb")!.addEventListener("click", () => {
+            this.view.prettyMode = this.view.prettyMode === PrettyMode.Draft
+                ? PrettyMode.Beauty
+                : PrettyMode.Draft;
+            this.view.drawAll();
+        });  
+        
+        document.getElementById("traceModeCb")!.addEventListener("click", () => {
+            this.view.traceMode = this.view.traceMode === TraceMode.Yes
+                ? TraceMode.No
+                : TraceMode.Yes;
+            if (this.view.traceMode === TraceMode.No) {
+                this.view.clearTrace();
+            }
+        });
+
+        document.addEventListener("keydown", (e) => {
+            switch (e.key) {
+                // step execution
+                case 's': case 'S': case 'і': case 'І':
+                    this.timeMode = TimeMode.Stop;
+                    this.step();
+                    break;
+            }
+        });
     }
 
 //#region  Mode props
@@ -77,16 +104,13 @@ export class Controller
             this.intervalId = setInterval(() => {
                 this.step();
             }, glo.INTERVAL);
-            glo.chronos = 0;
         } else {
             clearInterval(this.intervalId);
             this.intervalId = 0;
             this.view.showTimeAndEnergy();
         }
-        // UI
-        // let icon = mode === Mode.Play ? "stop-fill.svg" : "play-fill.svg";
-        // (doc.modeButton.children[0] as HTMLImageElement).src = "static/assets/icons/" + icon;
     }
+
     get timeMode(): TimeMode {
         return this.intervalId ? TimeMode.Play : TimeMode.Stop;
     }
@@ -94,16 +118,7 @@ export class Controller
 
     set createMode(value: CreateMode) 
     {
-        // // clear selection 
-        // if (this._createMode != v) {
-        //     this.selected = null;
-        // }
         this._createMode = value;
-        // change UI
-        // doc.createModeButton.innerHTML =
-        //     value === CreateMode.Ball ? "<b>B</b>all"
-        //         : value === CreateMode.Line ? "<b>L</b>ine"
-        //             : value === CreateMode.Link ? "Lin<b>K</b>" : "";
 
         // switch mouse handlers
         if (value === CreateMode.Ball) {
@@ -115,15 +130,14 @@ export class Controller
         }
         
     }
+
     get createMode() {
         return this._createMode;
     }
+
 //#endregion Mode props          
 
-//#region 
-
-    private selected: Ball | Line | Link | null = null
-
+//#region Mouse Handlers
 
     setBallHandlers() {
         let p0: Point | null = null;   // в p0 смещение курсора от центра шара
@@ -251,6 +265,7 @@ export class Controller
         };
     }
 
+
     setLinkHandlers() {
         let lastClickedBall: Ball | null = null;
 
@@ -299,8 +314,7 @@ export class Controller
         }
     }
 
-  
-//#endregion
+//#endregion  Mouse Handlers
 
 
     step() { 
@@ -314,7 +328,7 @@ export class Controller
         }
     }
 
-////////////////////////////////////////////////////////// Utils
+//---------------------- auxilary -----------------------
 
     private cursorPoint(event: MouseEvent) {
         const canvasRect = doc.canvas.getBoundingClientRect();

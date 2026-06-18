@@ -12,7 +12,7 @@ export class View
     private box: Space;
 
     public prettyMode = PrettyMode.Beauty;
-    public traceMode = TraceMode.No;
+    public traceMode = TraceMode.Yes;
 
     constructor(box: Space) {
         this.box = box;
