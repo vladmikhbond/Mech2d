@@ -4,8 +4,8 @@ import { Ball, Dot } from "./Ball.js"
 import { Line } from "./Line.js";
 import { Link } from "./Link.js";
 
-export enum Mode {Stop, Play};
-export enum CreateMode {Ball, Line, Link};
+export enum TimeMode {Stop, Play};
+export enum CreateMode {info, Ball, Line, Link};
 
 type Element = Ball | Line | Link | null;
 

@@ -21,8 +21,16 @@ export const doc =
 {
     canvas: <HTMLCanvasElement>document.getElementById("canvas"),
     canvas2: <HTMLCanvasElement>document.getElementById("canvas2"),
+    createModeButton: <HTMLSpanElement>document.getElementById("runButton"),
+
+    redBallImg: <HTMLImageElement>document.getElementById("redBallImg"),
+    greenBallImg: <HTMLImageElement>document.getElementById("greenBallImg"),
+    blueBallImg: <HTMLImageElement>document.getElementById("blueBallImg"),
+    goldBallImg: <HTMLImageElement>document.getElementById("goldBallImg"),
+
+    info: <HTMLSpanElement>document.getElementById("info"),
+
     // mousePosSpan: <HTMLSpanElement>document.getElementById("mousePosSpan"),
-    // info: <HTMLSpanElement>document.getElementById("info"),
     // createModeButton: <HTMLSpanElement>document.getElementById("createModeButton"),
     // traceModeButton: <HTMLSpanElement>document.getElementById("traceModeButton"),
     // modeButton: <HTMLButtonElement>document.getElementById("modeButton"),
@@ -53,10 +61,6 @@ export const doc =
     // answerButton: <HTMLButtonElement>document.getElementById("answerButton"),
     // applyBallButton: <HTMLButtonElement>document.getElementById("applyBallButton"),
     // applyLineButton: <HTMLButtonElement>document.getElementById("applyLineButton"),
-    // redBallImg: <HTMLImageElement>document.getElementById("redBallImg"),
-    // greenBallImg: <HTMLImageElement>document.getElementById("greenBallImg"),
-    // blueBallImg: <HTMLImageElement>document.getElementById("blueBallImg"),
-    // goldBallImg: <HTMLImageElement>document.getElementById("goldBallImg"),
     // saveSceneButton: <HTMLButtonElement>document.getElementById("saveSceneButton"),
     // loadSceneButton: <HTMLButtonElement>document.getElementById("loadSceneButton"),
     // savedSceneArea: <HTMLTextAreaElement>document.getElementById("savedSceneText"),  
