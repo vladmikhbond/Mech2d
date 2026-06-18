@@ -2,10 +2,10 @@ export const glo =
 {
     W: 0.5,      // conservation of energу when two balls strikes ( 1 - no loss)
     Wk: 0.95,    // conservation of energу when link reacts ( 1 - no loss)
-    K: 100,     // modulus of elasticity of a ball     
-    g: 0.005,  // acceleration of gravity  
+    K: 100,      // modulus of elasticity of a ball     
+    g: 0.005,    // acceleration of gravity  
 
-    Vis: 0,      // drag coeff   ( 0 - no drag)
+    Vis: 0,      // коеф. спротиву повітря   ( 0 - нема спротиву)
 
     INTERVAL: 10,
     chronos: 0,      // time in ticks (1 sec = 1000/INTERVAL ticks)

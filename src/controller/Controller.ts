@@ -69,7 +69,7 @@ export class Controller
         });       
 
 
-        // druft-pretty toggle
+        // Draft-pretty toggle
         document.getElementById("prettyModeCb")!.addEventListener("click", () => {
             this.view.prettyMode = this.view.prettyMode === PrettyMode.Draft
                 ? PrettyMode.Beauty
