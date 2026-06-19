@@ -309,8 +309,8 @@ export class Controller
     private cursorPoint(event: MouseEvent) {
         const canvasRect = doc.canvas.getBoundingClientRect();
         return {
-            x: event.x - canvasRect.left - this.space.x,
-            y: event.y - canvasRect.top - this.space.y
+            x: event.x - canvasRect.left,
+            y: event.y - canvasRect.top
         };
     }
 

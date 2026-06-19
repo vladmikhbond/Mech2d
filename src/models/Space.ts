@@ -8,8 +8,6 @@ export enum TimeMode {Stop, Play};
 export enum CreateMode {Info, Ball, Line, Link};
 
 export class Space {
-    x: number;
-    y: number;
     height: number;
     width: number;
     balls: Ball[] = [];
@@ -21,9 +19,7 @@ export class Space {
     selLine: Line | null = null;
     selLink: Link | null = null;
 
-    constructor(x: number, y: number, w: number, h: number) {
-        this.x = x;
-        this.y = y;
+    constructor(w: number, h: number) {
         this.width = w;
         this.height = h;
          

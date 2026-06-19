@@ -34,14 +34,14 @@ export class View
     
         // draw box
         ctx.strokeStyle = "black";
-        ctx.strokeRect(this.space.x, this.space.y, this.space.width, this.space.height);
+        ctx.strokeRect(0, 0, this.space.width, this.space.height);
     
         // draw balls
         for (let b of this.space.balls) {
             ctx.lineWidth = this.space.selBall === b ? 3 * lineWidth : lineWidth;
             ctx.strokeStyle = b.color;
             ctx.beginPath();
-            let x = this.space.x + b.x, y = this.space.y + b.y;
+            let x = b.x, y = b.y;
             if (glo.showBallDeform && b.dots && b.dots.length > 0) {
                 let dot = b.dots[0];
                 // show the deformation of the ball
@@ -80,8 +80,7 @@ export class View
             for (let d of b.dots) {
                 //if (!d) continue;
                 ctx.strokeStyle = 'black';
-                let x = this.space.x + d.x, y = this.space.y + d.y;
-                ctx.strokeRect(x-0.5, y-0.5, 1, 1);
+                ctx.strokeRect(d.x-0.5, d.y-0.5, 1, 1);
             }
         }
     
@@ -90,8 +89,8 @@ export class View
         for (let l of this.space.lines) {
             ctx.lineWidth = this.space.selLine === l ? 3 * lineWidth : lineWidth;
             ctx.beginPath();
-            ctx.moveTo(this.space.x + l.x1, this.space.y + l.y1);
-            ctx.lineTo(this.space.x + l.x2, this.space.y + l.y2);
+            ctx.moveTo(l.x1, l.y1);
+            ctx.lineTo(l.x2, l.y2);
             ctx.stroke();
         }
     
@@ -100,8 +99,8 @@ export class View
             ctx.lineWidth = this.space.selLink === l ? 3 * lineWidth : lineWidth;
             ctx.strokeStyle = l.transparent ? "lightgray" : "gray";
             ctx.beginPath();
-            ctx.moveTo(this.space.x + l.x1, this.space.y + l.y1);
-            ctx.lineTo(this.space.x + l.x2, this.space.y + l.y2);
+            ctx.moveTo(l.x1, l.y1);
+            ctx.lineTo(l.x2, l.y2);
             ctx.stroke();
         }
     }
@@ -114,7 +113,7 @@ export class View
         // draw box
         ctx.lineWidth = 0.5;
         ctx.strokeStyle = "black";
-        ctx.strokeRect(this.space.x, this.space.y, this.space.width, this.space.height);
+        ctx.strokeRect(0, 0, this.space.width, this.space.height);
 
         // draw links
         ctx.lineWidth = 3;
@@ -123,8 +122,8 @@ export class View
         for (let link of this.space.links) {
             if (link.transparent)
                 continue;
-            ctx.moveTo(this.space.x + link.x1, this.space.y + link.y1);
-            ctx.lineTo(this.space.x + link.x2, this.space.y + link.y2);
+            ctx.moveTo(link.x1, link.y1);
+            ctx.lineTo(link.x2, link.y2);
         }
         ctx.stroke();
 
@@ -137,7 +136,6 @@ export class View
                       b.color === "blue" ? doc.blueBallImg : 
                       b.color === "gold" ? doc.goldBallImg :
                       doc.greenBallImg;
-            let x = this.space.x + b.x, y = this.space.y + b.y;
 
             if (glo.showBallDeform && b.dots && b.dots.length > 0) {
                 let dot = b.dots[0];
@@ -148,7 +146,7 @@ export class View
                 kr = 1 - (1 - kr) / 5;
                 
                 ctx.save();
-                ctx.translate(x, y);
+                ctx.translate(b.x, b.y);
                 ctx.rotate(alpha);
                 ctx.scale(kr, 1 / kr);
                 ctx.rotate(-alpha);
@@ -159,7 +157,7 @@ export class View
             }
             else
             {
-                ctx.translate(x - b.radius, y - b.radius);
+                ctx.translate(b.x - b.radius, b.y - b.radius);
                 let k = 2 * b.radius / img.height;
                 ctx.scale(k, k);
             }
@@ -170,7 +168,7 @@ export class View
             if (this.traceMode === TraceMode.Yes) {
                 const ctx2 = doc.canvas2.getContext("2d")!;
                 ctx2.fillStyle = "gray";
-                ctx2.fillRect(x-0.5, y-0.5, 1, 1);
+                ctx2.fillRect(b.x - 0.5, b.y - 0.5, 1, 1);
             }           
         }
 
@@ -179,8 +177,8 @@ export class View
         ctx.strokeStyle = "blue";
         ctx.beginPath();
         for (let line of this.space.lines) {
-            ctx.moveTo(this.space.x + line.x1, this.space.y + line.y1);
-            ctx.lineTo(this.space.x + line.x2, this.space.y + line.y2);
+            ctx.moveTo(line.x1, line.y1);
+            ctx.lineTo(line.x2, line.y2);
         }
         ctx.stroke();
     }
@@ -192,8 +190,8 @@ export class View
         ctx.strokeStyle = "gray";
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(this.space.x + p0.x, this.space.y + p0.y);
-        ctx.lineTo(this.space.x + p.x, this.space.y + p.y);
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p.x, p.y);
         ctx.stroke();
     }
 
@@ -202,12 +200,12 @@ export class View
         ctx.strokeStyle = "gray";
         ctx.lineWidth = 1;
         ctx.beginPath();
-        let x = this.space.x + p0.x, y = this.space.y + p0.y;
+        let x = p0.x, y = p0.y;
         let r = Math.round(G.distance(p0, p));
         ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.stroke();
         // print sum energy
-        ctx.fillText("R = " + r, this.space.x + p.x, this.space.y + p.y );
+        ctx.fillText("R = " + r, p.x, p.y );
     }
 
     // -----------------------------------------------------
