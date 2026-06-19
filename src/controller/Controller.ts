@@ -5,7 +5,7 @@ import { Link } from "../models/Link.js";
 import { Geometry as G, Point } from "../models/Geometry.js";
 import { Space, TimeMode, CreateMode } from "../models/Space.js";
 import { PrettyMode, TraceMode, View } from "../view/View.js";
-import { getSpaceParams } from "./params.js";
+import { getSpaceParams, getBallParams, getLinkParams } from "./params.js";
 
 export class Controller 
 {
@@ -17,7 +17,6 @@ export class Controller
     private sceneJson = ""; 
     private _mousePos = new Point(0, 0);
     private _createMode = CreateMode.Ball;
-
 
 
     constructor(box: Space, view: View) {
@@ -55,17 +54,25 @@ export class Controller
             TimeMode.Stop;
         });
 
-        // Start-stop model time
+        // Set CreateMode
         document.getElementById("createMode")!.addEventListener("change", (e: Event) =>
         {
             let str = (e.target as HTMLSelectElement).value;
             const key = str as keyof typeof CreateMode;
             this.createMode = CreateMode[key];
+            
+            let sb = document.getElementById("ballParams")!.style;
+            let sl = document.getElementById("lineParams")!.style;
+            let sk = document.getElementById("linkParams")!.style;
+            sb.display = sl.display = sk.display = 
 
-            //     document.getElementById("oscilParams")!.style.display = 
-            //             this.mode == Mode.Osc || this.mode == Mode.Mon ? "inline" : "none";
-            //     document.getElementById("recieverParams")!.style.display = 
-            //             this.mode == Mode.Rec ? "inline" : "none";            
+            document.getElementById("ballParams")!.style.display = "none";
+            switch (this.createMode) {
+                case CreateMode.Ball: sb.display = "inline"; break;
+                case CreateMode.Line: sl.display = "inline"; break;
+                case CreateMode.Link: sk.display = "inline"; break;
+                default: break;
+            }         
         });       
 
 
@@ -154,20 +161,8 @@ export class Controller
                 return;
             }
 
-            ///// Перемикання //////
-            let obj = this.box.objectUnderPoint(p0);
-            this.selected = obj;
-
-            if (obj instanceof Ball) {
-                ball = obj;
-            } else if (obj instanceof Line) {
-                this.createMode = CreateMode.Line;
-            } else if (obj instanceof Link) {
-                this.createMode = CreateMode.Link;
-            }
-            ////////////////////////
-
-            if (ball) {
+            ball = this.box.ballUnderPoint(p0);
+            if (ball != null) {
                 // в p0 смещение курсора от центра шара
                 p0 = { x: ball.x - p0.x, y: ball.y - p0.y };
             }
@@ -207,9 +202,11 @@ export class Controller
                 let r = G.distance(p0!, p);
                 if (r > 2) {
                     // create a new ball
-                    let newBall = new Ball(p0!.x, p0!.y, r, "red", 0, 0);
+                    let [massa] = getBallParams();
+                    let color = massa == 0 ? "blue": "red";
+                    let newBall = new Ball(p0!.x, p0!.y, r, color, 0, 0);
                     this.box.addBall(newBall);
-                    this.selected = newBall;
+                    this.box.selBall = newBall;
                 }
             }
             this.view.drawAll();
@@ -224,19 +221,7 @@ export class Controller
         doc.canvas.onmousedown = (e) => {
             p0 = this.cursorPoint(e);
             let line: Line | null = null;
-            
-            ///// Перемикання //////
-            let obj = this.box.objectUnderPoint(p0);
-            this.selected = obj;
-
-            if (obj instanceof Ball) {
-                this.createMode = CreateMode.Ball;
-            } else if (obj instanceof Line) {
-                line = obj;
-            } else if (obj instanceof Link) {
-                this.createMode = CreateMode.Link;
-            }
-            ////////////////////////   
+               
         };
 
         doc.canvas.onmousemove = (e) => {
@@ -258,7 +243,7 @@ export class Controller
 
                 let l = new Line(p0.x, p0.y, p.x, p.y);
                 this.box.addLine(l);
-                this.selected = l;
+                this.box.selLine = l;
             }
             p0 = null;
             this.view.drawAll();
@@ -278,20 +263,6 @@ export class Controller
             if (ball === null || ball === lastClickedBall) {
 
                 let link: Link|null = null;
-
-                ///// Перемикання //////
-                let obj = this.box.objectUnderPoint(p);
-                this.selected = obj;
-
-                if (obj instanceof Ball) {
-                    this.createMode = CreateMode.Ball;
-                } else if (obj instanceof Line) {
-                    this.createMode = CreateMode.Line;
-                } else if (obj instanceof Link) {
-                    link = obj;
-                }
-                ////////////////////////
-
                 return;
             }
             if (lastClickedBall === null) {
@@ -301,7 +272,7 @@ export class Controller
 
             let link = new Link(lastClickedBall, ball);
             this.box.addLink(link);
-            this.selected = link;
+            this.box.selLink = link;
             lastClickedBall = null;
             this.view.drawAll();
         };
@@ -323,7 +294,7 @@ export class Controller
         this.box.collectDots();
         this.view.drawAll();
         
-        if (glo.chronos % 100 === 0) {
+        if (glo.chronos % 10 === 0) {
             this.view.showTimeAndEnergy();
         }
     }

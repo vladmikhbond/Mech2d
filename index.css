@@ -15,9 +15,10 @@ select {
     width: 450px;
 }
 
-#oscilParams, 
-#recieverParams {
-    width: 300px;
+#ballParams, 
+#lineParams,
+#linkParams {
+    width: 100px;
 }
 
 #time, #info {

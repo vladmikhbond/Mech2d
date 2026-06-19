@@ -21,6 +21,10 @@ export class Space {
 
     
     selected: Element = null;
+    selBall: Ball | null = null;
+    selLine: Line | null = null;
+    selLink: Link | null = null;
+
 
     constructor(x: number, y: number, w: number, h: number) {
         this.x = x;
@@ -165,12 +169,6 @@ export class Space {
 //#endregion
 
 //#region Mechanics
-
-    // step() {        
-    //     this.collectDots();
-    //     this.balls.forEach( b => b.move() )
-    //     glo.chronos++;
-    // }
 
     collectDots() {
         this.balls.forEach(b => b.clearDots());

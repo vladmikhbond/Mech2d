@@ -29,6 +29,50 @@ export function getSpaceParams(): [number, number, number, number]
     return ps;
 }
 
+export function getBallParams(): [number]
+{
+    const defValue: [number] = [1];
+    const paramsElement = (document.getElementById("ballParams") as HTMLInputElement)!;
+    let ps: [number];
+    try {
+        ps = (new Function("", 
+            "let m;" + 
+            paramsElement.value + 
+            "; return [m]" 
+        ))();
+    } catch {
+        return errMesage("Grammar error", defValue, paramsElement);
+    }
+    // перевірки
+    if (ps[0] == undefined || ps[0] < 0 ) 
+        return errMesage("m: m >= 0", defValue, paramsElement);
+    
+    paramsElement.style.backgroundColor = "";
+    return ps;
+}
+
+export function getLinkParams(): [number]
+{
+    const defValue: [number] = [1];
+    const paramsElement = (document.getElementById("ballParams") as HTMLInputElement)!;
+    let ps: [number];
+    try {
+        ps = (new Function("", 
+            "let t;" + 
+            paramsElement.value + 
+            "; return [t]" 
+        ))();
+    } catch {
+        return errMesage("Grammar error", defValue, paramsElement);
+    }
+    // перевірки
+    if ( !(ps[0] === 0 || ps[0] === 1) ) 
+        return errMesage("t: t = 0 | 1", defValue, paramsElement);
+    
+    paramsElement.style.backgroundColor = "";
+    return ps;
+}
+
 
 
 function errMesage(mes: string, defValue: any, el: HTMLInputElement) {
