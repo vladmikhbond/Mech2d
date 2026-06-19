@@ -5,9 +5,7 @@ import { Line } from "./Line.js";
 import { Link } from "./Link.js";
 
 export enum TimeMode {Stop, Play};
-export enum CreateMode {info, Ball, Line, Link};
-
-type Element = Ball | Line | Link | null;
+export enum CreateMode {Info, Ball, Line, Link};
 
 export class Space {
     x: number;
@@ -19,12 +17,9 @@ export class Space {
     border: Line[];
     links: Link[] = [];
 
-    
-    selected: Element = null;
     selBall: Ball | null = null;
     selLine: Line | null = null;
     selLink: Link | null = null;
-
 
     constructor(x: number, y: number, w: number, h: number) {
         this.x = x;
@@ -50,10 +45,6 @@ export class Space {
         return [eKin, ePot, eDef];
     }
 
-    objectUnderPoint(p: Point): Element {
-        return this.ballUnderPoint(p) || this.lineUnderPoint(p) || this.linkUnderPoint(p);
-    }
-
 //#region  Ball Suit
 
     addBall(b: Ball) {
@@ -66,8 +57,8 @@ export class Space {
         if (idx === -1)
             return;
         this.balls.splice(idx, 1);
-        if (this.selected === b)
-            this.selected = null;
+        if (this.selBall === b)
+            this.selBall = null;
         // delete boll's links
         for (let i = this.links.length - 1; i >= 0; i--) {
             if (this.links[i].b1 === b || this.links[i].b2 === b)
@@ -126,8 +117,8 @@ export class Space {
         if (idx === -1)
             return;
         this.lines.splice(idx, 1);
-        if (this.selected === line)
-            this.selected = null;
+        if (this.selLine === line)
+            this.selLine = null;
     }
 
     // find a line under point

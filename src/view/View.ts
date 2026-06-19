@@ -9,13 +9,13 @@ export enum TraceMode {No, Yes};
 export class View 
 {
 
-    private box: Space;
+    private space: Space;
 
     public prettyMode = PrettyMode.Beauty;
     public traceMode = TraceMode.Yes;
 
     constructor(box: Space) {
-        this.box = box;
+        this.space = box;
     }
 
     clearTrace() {
@@ -34,14 +34,14 @@ export class View
     
         // draw box
         ctx.strokeStyle = "black";
-        ctx.strokeRect(this.box.x, this.box.y, this.box.width, this.box.height);
+        ctx.strokeRect(this.space.x, this.space.y, this.space.width, this.space.height);
     
         // draw balls
-        for (let b of this.box.balls) {
-            ctx.lineWidth = this.box.selected === b ? 3 * lineWidth : lineWidth;
+        for (let b of this.space.balls) {
+            ctx.lineWidth = this.space.selBall === b ? 3 * lineWidth : lineWidth;
             ctx.strokeStyle = b.color;
             ctx.beginPath();
-            let x = this.box.x + b.x, y = this.box.y + b.y;
+            let x = this.space.x + b.x, y = this.space.y + b.y;
             if (glo.showBallDeform && b.dots && b.dots.length > 0) {
                 let dot = b.dots[0];
                 // show the deformation of the ball
@@ -75,33 +75,33 @@ export class View
     
 
         // draw dots of balls
-        for (let b of this.box.balls) {
+        for (let b of this.space.balls) {
             if (!b.dots) continue;
             for (let d of b.dots) {
                 //if (!d) continue;
                 ctx.strokeStyle = 'black';
-                let x = this.box.x + d.x, y = this.box.y + d.y;
+                let x = this.space.x + d.x, y = this.space.y + d.y;
                 ctx.strokeRect(x-0.5, y-0.5, 1, 1);
             }
         }
     
         // draw lines
         ctx.strokeStyle = "blue";
-        for (let l of this.box.lines) {
-            ctx.lineWidth = this.box.selected === l ? 3 * lineWidth : lineWidth;
+        for (let l of this.space.lines) {
+            ctx.lineWidth = this.space.selLine === l ? 3 * lineWidth : lineWidth;
             ctx.beginPath();
-            ctx.moveTo(this.box.x + l.x1, this.box.y + l.y1);
-            ctx.lineTo(this.box.x + l.x2, this.box.y + l.y2);
+            ctx.moveTo(this.space.x + l.x1, this.space.y + l.y1);
+            ctx.lineTo(this.space.x + l.x2, this.space.y + l.y2);
             ctx.stroke();
         }
     
         // draw links
-        for (let l of this.box.links) {
-            ctx.lineWidth = this.box.selected === l ? 3 * lineWidth : lineWidth;
+        for (let l of this.space.links) {
+            ctx.lineWidth = this.space.selLink === l ? 3 * lineWidth : lineWidth;
             ctx.strokeStyle = l.transparent ? "lightgray" : "gray";
             ctx.beginPath();
-            ctx.moveTo(this.box.x + l.x1, this.box.y + l.y1);
-            ctx.lineTo(this.box.x + l.x2, this.box.y + l.y2);
+            ctx.moveTo(this.space.x + l.x1, this.space.y + l.y1);
+            ctx.lineTo(this.space.x + l.x2, this.space.y + l.y2);
             ctx.stroke();
         }
     }
@@ -114,30 +114,30 @@ export class View
         // draw box
         ctx.lineWidth = 0.5;
         ctx.strokeStyle = "black";
-        ctx.strokeRect(this.box.x, this.box.y, this.box.width, this.box.height);
+        ctx.strokeRect(this.space.x, this.space.y, this.space.width, this.space.height);
 
         // draw links
         ctx.lineWidth = 3;
         ctx.strokeStyle = "gray";
         ctx.beginPath();
-        for (let link of this.box.links) {
+        for (let link of this.space.links) {
             if (link.transparent)
                 continue;
-            ctx.moveTo(this.box.x + link.x1, this.box.y + link.y1);
-            ctx.lineTo(this.box.x + link.x2, this.box.y + link.y2);
+            ctx.moveTo(this.space.x + link.x1, this.space.y + link.y1);
+            ctx.lineTo(this.space.x + link.x2, this.space.y + link.y2);
         }
         ctx.stroke();
 
 
         // draw balls
-        for (let b of this.box.balls) {
+        for (let b of this.space.balls) {
             ctx.save();
 
             let img = b.color === "red" ? doc.redBallImg : 
                       b.color === "blue" ? doc.blueBallImg : 
                       b.color === "gold" ? doc.goldBallImg :
                       doc.greenBallImg;
-            let x = this.box.x + b.x, y = this.box.y + b.y;
+            let x = this.space.x + b.x, y = this.space.y + b.y;
 
             if (glo.showBallDeform && b.dots && b.dots.length > 0) {
                 let dot = b.dots[0];
@@ -178,9 +178,9 @@ export class View
         ctx.lineWidth = 2;
         ctx.strokeStyle = "blue";
         ctx.beginPath();
-        for (let line of this.box.lines) {
-            ctx.moveTo(this.box.x + line.x1, this.box.y + line.y1);
-            ctx.lineTo(this.box.x + line.x2, this.box.y + line.y2);
+        for (let line of this.space.lines) {
+            ctx.moveTo(this.space.x + line.x1, this.space.y + line.y1);
+            ctx.lineTo(this.space.x + line.x2, this.space.y + line.y2);
         }
         ctx.stroke();
     }
@@ -191,8 +191,8 @@ export class View
         const ctx = <CanvasRenderingContext2D>doc.canvas.getContext("2d");
         ctx.strokeStyle = "gray";
         ctx.beginPath();
-        ctx.moveTo(this.box.x + p0.x, this.box.y + p0.y);
-        ctx.lineTo(this.box.x + p.x, this.box.y + p.y);
+        ctx.moveTo(this.space.x + p0.x, this.space.y + p0.y);
+        ctx.lineTo(this.space.x + p.x, this.space.y + p.y);
         ctx.stroke();
     }
 
@@ -200,18 +200,18 @@ export class View
         const ctx = <CanvasRenderingContext2D>doc.canvas.getContext("2d");
         ctx.strokeStyle = "gray";
         ctx.beginPath();
-        let x = this.box.x + p0.x, y = this.box.y + p0.y;
+        let x = this.space.x + p0.x, y = this.space.y + p0.y;
         let r = Math.round(G.distance(p0, p));
         ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.stroke();
         // print sum energy
-        ctx.fillText("R = " + r, this.box.x + p.x, this.box.y + p.y );
+        ctx.fillText("R = " + r, this.space.x + p.x, this.space.y + p.y );
     }
 
     // -----------------------------------------------------
     showTimeAndEnergy() {
         //let seconds = (glo.chronos/ 1000 * glo.INTERVAL).toFixed(0);
-        let [ek, eg, ed] = this.box.energy;
+        let [ek, eg, ed] = this.space.energy;
         doc.info.innerHTML = `T=${glo.chronos} &nbsp;&nbsp; E=${(ek + eg + ed).toFixed()}`;
     }   
 }

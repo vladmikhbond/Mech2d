@@ -10,7 +10,7 @@ import { getSpaceParams, getBallParams, getLinkParams } from "./params.js";
 export class Controller 
 {
 
-    public box: Space;
+    public space: Space;
     public view: View;
 
     private intervalId = 0;   // base field for timeMode property
@@ -19,8 +19,8 @@ export class Controller
     private _createMode = CreateMode.Ball;
 
 
-    constructor(box: Space, view: View) {
-        this.box = box;
+    constructor(space: Space, view: View) {
+        this.space = space;
         this.view = view;
 
 
@@ -156,12 +156,12 @@ export class Controller
             isMousePressed = true;
 
             p0 = this.cursorPoint(e);
-            ballVelo = this.box.ballVeloUnderPoint(p0);
+            ballVelo = this.space.ballVeloUnderPoint(p0);
             if (ballVelo) {
                 return;
             }
 
-            ball = this.box.ballUnderPoint(p0);
+            ball = this.space.ballUnderPoint(p0);
             if (ball != null) {
                 // в p0 смещение курсора от центра шара
                 p0 = { x: ball.x - p0.x, y: ball.y - p0.y };
@@ -200,12 +200,12 @@ export class Controller
             if (!ball && !ballVelo) {
                 let p = this.cursorPoint(e);
                 let r = G.distance(p0!, p);
+                // create a new ball
                 if (r > 2) {
-                    // create a new ball
                     let [st, m] = getBallParams();
                     let newBall = new Ball(p0!.x, p0!.y, r, "red", 0, 0, st === 1, m);
-                    this.box.addBall(newBall);
-                    this.box.selBall = newBall;
+                    this.space.addBall(newBall);
+                    this.space.selBall = newBall;
                 }
             }
             this.view.drawAll();
@@ -241,8 +241,8 @@ export class Controller
             if (G.distance(p0, p) > 2) {
 
                 let l = new Line(p0.x, p0.y, p.x, p.y);
-                this.box.addLine(l);
-                this.box.selLine = l;
+                this.space.addLine(l);
+                this.space.selLine = l;
             }
             p0 = null;
             this.view.drawAll();
@@ -257,7 +257,7 @@ export class Controller
 
             let p = this.cursorPoint(e);
 
-            let ball = this.box.ballUnderPoint(p);
+            let ball = this.space.ballUnderPoint(p);
 
             if (ball === null || ball === lastClickedBall) {
 
@@ -270,8 +270,8 @@ export class Controller
             }
 
             let link = new Link(lastClickedBall, ball);
-            this.box.addLink(link);
-            this.box.selLink = link;
+            this.space.addLink(link);
+            this.space.selLink = link;
             lastClickedBall = null;
             this.view.drawAll();
         };
@@ -289,8 +289,8 @@ export class Controller
 
     step() { 
         glo.chronos++;
-        this.box.balls.forEach( b => b.move() )
-        this.box.collectDots();
+        this.space.balls.forEach( b => b.move() )
+        this.space.collectDots();
         this.view.drawAll();
         
         if (glo.chronos % 10 === 0) {
@@ -303,8 +303,8 @@ export class Controller
     private cursorPoint(event: MouseEvent) {
         const canvasRect = doc.canvas.getBoundingClientRect();
         return {
-            x: event.x - canvasRect.left - this.box.x,
-            y: event.y - canvasRect.top - this.box.y
+            x: event.x - canvasRect.left - this.space.x,
+            y: event.y - canvasRect.top - this.space.y
         };
     }
 
