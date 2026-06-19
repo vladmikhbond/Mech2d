@@ -15,10 +15,10 @@
           <span id="time"></span> 
           <span id="info"> </span> 
       </h1>
-<!-- ------------------top------------------  -->
+      <!------------------ top panel ---------------->
       <div>
           <input id="sizeParams" type="text" value="W=600; H=400">
-          <input id="spaceParams" type="text" value="W=0.5; Wk=0.95; K=100;  g=0.005"  style="width: 350px;" >
+          <input id="spaceParams" type="text" value="W=0.5; Wk=0.95; K=100; g=0.005"  style="width: 350px;" >
 
           <select id="createMode" aria-label="Select" required>
               <option value="Info">Info</option>
@@ -38,19 +38,18 @@
           <input id="traceModeCb" type="checkbox" checked title="trace mode"> 
       </div>
 
-<!-- ------------------cnvases------------------  -->
-<div class="canvas-frame">
-  <canvas id="canvas2" width="800" height="600" class="canvas-item"></canvas>
-  <canvas id="canvas" width="800" height="600" class="canvas-item"></canvas>
-</div>
+      <!-- ------------------canvases------------------  -->
+      <div class="canvas-frame">
+        <canvas id="canvas2" width="800" height="600" class="canvas-item"></canvas>
+        <canvas id="canvas" width="800" height="600" class="canvas-item"></canvas>
+      </div>
 
-
-<!-- ------------------bottom------------------  -->
-<div class="bottom-panel">
-  <button id="saveSceneButton" class="scene-btn" title="Export scene">S</button>
-  <textarea id="savedSceneText" rows="1" class="scene-textarea"></textarea>
-  <button id="loadSceneButton" class="scene-btn" title="Import scene">L</button>
-</div>
+      <!-- ------------------bottom panel------------------  -->
+      <div class="bottom-panel">
+        <button id="saveSceneButton" class="scene-btn" title="Export scene">S</button>
+        <textarea id="savedSceneText" rows="1" class="scene-textarea"></textarea>
+        <button id="loadSceneButton" class="scene-btn" title="Import scene">L</button>
+      </div>
  
       <img src="./assets/redBall.png" id="redBallImg" width="523" height="520" style="display: none;" />
       <img src="./assets/blueBall.png" id="blueBallImg" width="523" height="520" style="display: none;" />

@@ -114,6 +114,7 @@ export class Controller
     setSize(w: number, h: number) {
         document.documentElement.style.setProperty('--canvas-width', w+'px');
         document.documentElement.style.setProperty('--canvas-height', h+'px');
+        document.getElementById("savedSceneText")!.style.width = (w - 125)+'px'; 
         this.space.setSize(w, h); 
         doc.canvas.height = h;
         doc.canvas.width = w;
