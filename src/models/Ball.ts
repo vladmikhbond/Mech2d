@@ -18,7 +18,15 @@ export class Dot extends Point {
 // move() - переміщення кулі. Викликається, коли зібрані усі точки дотику
 export class Ball 
 {
-    x: number; y: number; radius: number; color: string; vx: number; vy: number; m: number;
+    x: number; 
+    y: number; 
+    radius: number; 
+    color: string; 
+    vx: number; 
+    vy: number; 
+    m: number;
+    is_stone: boolean;
+    
     box: Space | null = null;
     ax = 0; 
     ay = 0;
@@ -26,14 +34,16 @@ export class Ball
     dots: Dot[] = [];
     dotShadows: Dot[] = [];
     
-    constructor(x:number, y:number, r:number, c:string, vx:number, vy:number, m=0) {
+    constructor(x:number, y:number, r:number, color:string, vx:number, vy:number, is_stone=false, m=0) {
         this.x = x;
         this.y = y;
         this.radius = r;
-        this.color = c;
+        // непорушні кулі завжди сині
+        this.color = is_stone ? "blue" : color;
         this.vx = vx;
         this.vy = vy;
-        // якщо маса не задана, то вона пропорційна площа кулі
+        this.is_stone = is_stone
+        // якщо маса не задана, то вона пропорційна площ кулі
         this.m = m ? m : r * r;
     }
 
@@ -81,11 +91,13 @@ export class Ball
     // Переміщення кулі. 
     // Викликається, коли зібрані усі точки дотику
     move() {
+        let ball = this;
+        // куля непорушна
+        if (ball.is_stone)
+            return;
+
         // сумарна сила
         let fx = 0, fy = 0;
-        let ball = this;
-        if (ball.color === "blue")
-            return;
         // складаємо прискорення від кожної точки дотику
         for (let dot of ball.dots) {
             let ballDotDistance = G.distance(ball, dot);

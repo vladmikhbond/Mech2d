@@ -29,23 +29,23 @@ export function getSpaceParams(): [number, number, number, number]
     return ps;
 }
 
-export function getBallParams(): [number]
+export function getBallParams(): [number, number|undefined]
 {
-    const defValue: [number] = [1];
+    const defValue: [number, number|undefined] = [1, undefined];
     const paramsElement = (document.getElementById("ballParams") as HTMLInputElement)!;
-    let ps: [number];
+    let ps: [number, number|undefined];
     try {
         ps = (new Function("", 
-            "let m;" + 
+            "let st, m;" + 
             paramsElement.value + 
-            "; return [m]" 
+            "; return [st, m]" 
         ))();
     } catch {
         return errMesage("Grammar error", defValue, paramsElement);
     }
     // перевірки
-    if (ps[0] == undefined || ps[0] < 0 ) 
-        return errMesage("m: m >= 0", defValue, paramsElement);
+    if ( !(ps[0] === 0 || ps[0] === 1) ) 
+        return errMesage("st: st = 0 | 1", defValue, paramsElement);
     
     paramsElement.style.backgroundColor = "";
     return ps;

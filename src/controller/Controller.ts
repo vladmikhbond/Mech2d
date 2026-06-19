@@ -202,9 +202,8 @@ export class Controller
                 let r = G.distance(p0!, p);
                 if (r > 2) {
                     // create a new ball
-                    let [massa] = getBallParams();
-                    let color = massa == 0 ? "blue": "red";
-                    let newBall = new Ball(p0!.x, p0!.y, r, color, 0, 0);
+                    let [st, m] = getBallParams();
+                    let newBall = new Ball(p0!.x, p0!.y, r, "red", 0, 0, st === 1, m);
                     this.box.addBall(newBall);
                     this.box.selBall = newBall;
                 }
