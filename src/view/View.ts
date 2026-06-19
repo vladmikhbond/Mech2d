@@ -175,7 +175,7 @@ export class View
         }
 
         // draw lines
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4;
         ctx.strokeStyle = "blue";
         ctx.beginPath();
         for (let line of this.space.lines) {
@@ -190,6 +190,7 @@ export class View
     drawGrayLine(p0: Point, p: Point) {
         const ctx = <CanvasRenderingContext2D>doc.canvas.getContext("2d");
         ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(this.space.x + p0.x, this.space.y + p0.y);
         ctx.lineTo(this.space.x + p.x, this.space.y + p.y);
@@ -199,6 +200,7 @@ export class View
     drawGrayCircle(p0: Point, p: Point) {
         const ctx = <CanvasRenderingContext2D>doc.canvas.getContext("2d");
         ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
         ctx.beginPath();
         let x = this.space.x + p0.x, y = this.space.y + p0.y;
         let r = Math.round(G.distance(p0, p));

@@ -146,7 +146,8 @@ export class Controller
 
 //#region Mouse Handlers
 
-    setBallHandlers() {
+    setBallHandlers() 
+    {
         let p0: Point | null = null;   // в p0 смещение курсора от центра шара
         let ball: Ball | null = null;
         let ballVelo: Ball | null = null;
@@ -165,6 +166,7 @@ export class Controller
             if (ball != null) {
                 // в p0 смещение курсора от центра шара
                 p0 = { x: ball.x - p0.x, y: ball.y - p0.y };
+                this.space.selBall = ball;
             }
             
         };
@@ -219,7 +221,11 @@ export class Controller
 
         doc.canvas.onmousedown = (e) => {
             p0 = this.cursorPoint(e);
-            let line: Line | null = null;
+            // let line: Line | null = null;
+            let line = this.space.lineUnderPoint(p0);
+            if (line) {
+                this.space.selLine = line;
+            }
                
         };
 
@@ -238,8 +244,8 @@ export class Controller
             if (p0 === null)
                 return;
             let p = this.cursorPoint(e);
+            // Create new line
             if (G.distance(p0, p) > 2) {
-
                 let l = new Line(p0.x, p0.y, p.x, p.y);
                 this.space.addLine(l);
                 this.space.selLine = l;
