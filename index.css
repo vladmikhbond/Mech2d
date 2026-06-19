@@ -7,18 +7,12 @@ input[type=range] {
     width: 500px ;
 }
 
+input[type=text] {
+    width: 200px ;
+}
+
 select {
-    width: 110px ;
-}
-
-#spaceParams {
-    width: 450px;
-}
-
-#ballParams, 
-#lineParams,
-#linkParams {
-    width: 200px;
+    width: 120px ;
 }
 
 #time, #info {
@@ -54,8 +48,8 @@ select {
 
 .scene-textarea {
     display: inline; 
-    height: 80px;
-    width: 500px
+    height: 70px;
+    width: 70% !important
 }
 .scene-btn {
     vertical-align: top; 

@@ -8,11 +8,11 @@ export enum TimeMode {Stop, Play};
 export enum CreateMode {Info, Ball, Line, Link};
 
 export class Space {
-    height: number;
-    width: number;
+    height = 0;
+    width = 0;
     balls: Ball[] = [];
     lines: Line[] = [];
-    border: Line[];
+    border: Line[] = [];
     links: Link[] = [];
 
     selBall: Ball | null = null;
@@ -20,9 +20,12 @@ export class Space {
     selLink: Link | null = null;
 
     constructor(w: number, h: number) {
+        this.setSize(w, h);  
+    }
+
+    setSize(w: number, h: number) {
         this.width = w;
         this.height = h;
-         
         this.border = [
             new Line(0, 0, w, 0), // top
             new Line(w, 0, w, h), // right
@@ -30,6 +33,7 @@ export class Space {
             new Line(0, h, 0, 0), // left
         ];
     }
+
 
     get energy() {
         let eKin = 0, ePot = 0, eDef = 0;

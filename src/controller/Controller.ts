@@ -5,7 +5,7 @@ import { Link } from "../models/Link.js";
 import { Geometry as G, Point } from "../models/Geometry.js";
 import { Space, TimeMode, CreateMode } from "../models/Space.js";
 import { PrettyMode, TraceMode, View } from "../view/View.js";
-import { getSpaceParams, getBallParams, getLinkParams } from "./params.js";
+import { getSpaceParams, getBallParams, getSizeParams } from "./params.js";
 
 export class Controller 
 {
@@ -22,29 +22,36 @@ export class Controller
     constructor(space: Space, view: View) {
         this.space = space;
         this.view = view;
-
-
-        // set state of UI
+        // set UI
+        this.setSize(space.width, space.height);        
         this.timeMode = TimeMode.Stop;
         this.createMode = CreateMode.Ball;
-        // this.addButtonClickListeners();
-        // this.addChangeListeners();
-        // this.addKeyboardListeners();
-        // this.addSpanClickListeners();
+        //
+        this.addEventHandlers();
+    }
 
-        // this.resetUI();  // last command of the constructor
+    addEventHandlers() 
+    {
+        // sizeParams changed 
+        document.getElementById("sizeParams")!.addEventListener("keydown", (e: KeyboardEvent) => 
+        {
+            if (e.key == "Enter") {
+                const [w, h] = getSizeParams();
+                this.setSize(w, h);
+                document.getElementById("helpButton")!.focus();
+            }                
+        }); 
 
-
-        // Params changed 
+        // spaceParams changed
         document.getElementById("spaceParams")!.addEventListener("keydown", (e: KeyboardEvent) => 
         {
             if (e.key == "Enter") {
                 const [w, wk, k, g] = getSpaceParams()
                 glo.W = w; glo.Wk = wk; glo.K = k; glo.g = g; 
                 document.getElementById("helpButton")!.focus();
-            }
-                
+            }      
         });  
+
 
         // Start-stop model time
         document.getElementById("runButton")!.addEventListener("click", () => 
@@ -54,7 +61,7 @@ export class Controller
             TimeMode.Stop;
         });
 
-        // Set CreateMode
+        // Set Create Mode
         document.getElementById("createMode")!.addEventListener("change", (e: Event) =>
         {
             let str = (e.target as HTMLSelectElement).value;
@@ -76,7 +83,7 @@ export class Controller
         });       
 
 
-        // Draft-pretty toggle
+        // Draft-Pretty toggle
         document.getElementById("prettyModeCb")!.addEventListener("click", () => {
             this.view.prettyMode = this.view.prettyMode === PrettyMode.Draft
                 ? PrettyMode.Beauty
@@ -102,6 +109,28 @@ export class Controller
                     break;
             }
         });
+    }
+
+    setSize(w: number, h: number) {
+        document.documentElement.style.setProperty('--canvas-width', w+'px');
+        document.documentElement.style.setProperty('--canvas-height', h+'px');
+        this.space.setSize(w, h); 
+        doc.canvas.height = h;
+        doc.canvas.width = w;
+        doc.canvas2.height = h;
+        doc.canvas2.width = w;
+        this.view.drawAll();
+    }
+
+    step() { 
+        glo.chronos++;
+        this.space.balls.forEach( b => b.move() )
+        this.space.collectDots();
+        this.view.drawAll();
+        
+        if (glo.chronos % 10 === 0) {
+            this.view.showTimeAndEnergy();
+        }
     }
 
 //#region  Mode props
@@ -292,17 +321,6 @@ export class Controller
 
 //#endregion  Mouse Handlers
 
-
-    step() { 
-        glo.chronos++;
-        this.space.balls.forEach( b => b.move() )
-        this.space.collectDots();
-        this.view.drawAll();
-        
-        if (glo.chronos % 10 === 0) {
-            this.view.showTimeAndEnergy();
-        }
-    }
 
 //---------------------- auxilary -----------------------
 

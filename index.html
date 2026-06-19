@@ -16,27 +16,27 @@
           <span id="info"> </span> 
       </h1>
 <!-- ------------------top------------------  -->
-        <div>
-            <input id="spaceParams" type="text" value="W=0.5; Wk=0.95; K=100;  g=0.005" >
+      <div>
+          <input id="sizeParams" type="text" value="W=600; H=400">
+          <input id="spaceParams" type="text" value="W=0.5; Wk=0.95; K=100;  g=0.005"  style="width: 350px;" >
 
-            <select id="createMode" aria-label="Select" required>
-                <option value="Info">Info</option>
-                <option value="Ball" selected >Ball</option>
-                <option value="Line">Line</option>
-                <option value="Link">Link</option>
-            </select>     
+          <select id="createMode" aria-label="Select" required>
+              <option value="Info">Info</option>
+              <option value="Ball" selected >Ball</option>
+              <option value="Line">Line</option>
+              <option value="Link">Link</option>
+          </select>     
 
-            <input id="ballParams" type="text" value="st=0" style="display: inline;">
-            <input id="lineParams" type="text" value="" style="display: none;">
-            <input id="linkParams" type="text" value="t=0" style="display: none;">
+          <input id="ballParams" type="text" value="st=0" style="display: inline;" >
+          <input id="lineParams" type="text" value="" style="display: none;">
+          <input id="linkParams" type="text" value="t=0" style="display: none;">
 
-            <button id="runButton" title="Run | Stop">Run</button>
-            <button id="helpButton" title="Help" class="outline">H</button>
+          <button id="runButton" title="Run | Stop">Run</button>
+          <button id="helpButton" title="Help" class="outline">H</button>
 
-            <input id="prettyModeCb" type="checkbox" checked title="pretty mode"> 
-            <input id="traceModeCb" type="checkbox" checked title="trace mode"> 
-        </div>
-
+          <input id="prettyModeCb" type="checkbox" checked title="pretty mode"> 
+          <input id="traceModeCb" type="checkbox" checked title="trace mode"> 
+      </div>
 
 <!-- ------------------cnvases------------------  -->
 <div class="canvas-frame">

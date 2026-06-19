@@ -1,3 +1,31 @@
+type N2 = [number, number];
+
+export function getSizeParams(): N2
+{
+    const defValue: N2 = [500, 800];
+    const paramsElement = (document.getElementById("sizeParams") as HTMLInputElement)!;
+    let ps: N2;
+    try {
+        ps = (new Function("", 
+            "let W, H;" + 
+            paramsElement.value + 
+            "; return [W, H]" 
+        ))();
+    } catch {
+        return errMesage("Grammar error", defValue, paramsElement);
+    }
+    // перевірки
+    if (ps[0] == undefined || ps[0] <= 0) 
+        return errMesage("W: W > 0", defValue, paramsElement);
+
+    if (ps[1] == undefined || ps[1] <= 0) 
+        return errMesage("H: H > 0", defValue, paramsElement);
+
+    paramsElement.style.backgroundColor = "";
+    return ps;
+}
+
+
 export function getSpaceParams(): [number, number, number, number]
 {
     const defValue: [number, number, number, number] = [0.5, 0.95, 100, 0.005];
