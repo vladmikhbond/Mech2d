@@ -3,10 +3,32 @@
     --canvas-height: 600px;
     --element-height: 50px;
 }
-/* <!------------------ top panel ----------------> */
+
 input[type=text],
-select {
+select,
+button  {
     vertical-align: top;
+    font-size: 0.9rem;
+}
+
+
+
+/* <!------------------ top panel ----------------> */
+
+select,
+button,
+input[type=checkbox]
+ {
+    background-color:rgb(42, 111, 113);
+    padding-top: 8px;
+}
+
+button {
+    height: var(--element-height);
+    
+}
+#helpButton {
+        background-color: lightblue;
 }
 
 input[type=text] {
@@ -18,19 +40,16 @@ select {
     width: 120px;
     height: var(--element-height);
     padding-top: 8px;
-    background-color: var(--pico-primary);
+    
     color: white;
-}
-
-button {
-    height: var(--element-height);
-    padding-top: 8px;
 }
 
 #time, #info {
     font-size: large;
     margin-left: 50px;
 }
+
+/* <!------------------ canvases ----------------> */
 
 .canvas-frame {
     position: relative;

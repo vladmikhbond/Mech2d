@@ -36,9 +36,11 @@ export class Controller
         document.getElementById("sizeParams")!.addEventListener("keydown", (e: KeyboardEvent) => 
         {
             if (e.key == "Enter") {
-                const [w, h] = getSizeParams();
-                this.setSize(w, h);
-                document.getElementById("helpButton")!.focus();
+                const size = getSizeParams();
+                if (size) {
+                    this.setSize(...size);
+                    takeFocusOff()
+                }
             }                
         }); 
 
@@ -46,11 +48,14 @@ export class Controller
         document.getElementById("spaceParams")!.addEventListener("keydown", (e: KeyboardEvent) => 
         {
             if (e.key == "Enter") {
-                const [w, wk, k, g] = getSpaceParams()
-                glo.W = w; glo.Wk = wk; glo.K = k; glo.g = g; 
-                document.getElementById("helpButton")!.focus();
+                const ps = getSpaceParams();
+                if (ps) {
+                    [glo.K, glo.W, glo.Wk, glo.Vis, glo.g] = ps;                 
+                    takeFocusOff();
+                }
             }      
         });  
+
 
 
         // Start-stop model time
@@ -59,6 +64,12 @@ export class Controller
             this.timeMode = this.timeMode == TimeMode.Stop ? 
             TimeMode.Play : 
             TimeMode.Stop;
+        });
+
+        // Open help page
+        document.getElementById("helpButton")!.addEventListener("click", () => 
+        {
+            window.open("help.html", "_blank")?.focus();
         });
 
         // Set Create Mode
@@ -124,12 +135,12 @@ export class Controller
     }
 
     step() { 
-        glo.chronos++;
+        glo.time++;
         this.space.balls.forEach( b => b.move() )
         this.space.collectDots();
         this.view.drawAll();
         
-        if (glo.chronos % 10 === 0) {
+        if (glo.time % 10 === 0) {
             this.view.showTimeAndEnergy();
         }
     }
@@ -232,12 +243,15 @@ export class Controller
             if (!ball && !ballVelo) {
                 let p = this.cursorPoint(e);
                 let r = G.distance(p0!, p);
-                // create a new ball
+                // create a new ball with params
                 if (r > 2) {
-                    let [st, m] = getBallParams();
-                    let newBall = new Ball(p0!.x, p0!.y, r, "red", 0, 0, st === 1, m);
-                    this.space.addBall(newBall);
-                    this.space.selBall = newBall;
+                    let ps = getBallParams();
+                    if (ps) {
+                        let [st, m] = ps;
+                        let newBall = new Ball(p0!.x, p0!.y, r, "red", 0, 0, st === 1, m);
+                        this.space.addBall(newBall);
+                        this.space.selBall = newBall;
+                    }
                 }
             }
             this.view.drawAll();
@@ -333,4 +347,8 @@ export class Controller
         };
     }
 
+}
+
+function takeFocusOff() {
+    doc.canvas.focus();
 }

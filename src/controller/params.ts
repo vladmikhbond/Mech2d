@@ -1,8 +1,8 @@
 type N2 = [number, number];
+type N5 = [number, number, number, number, number];
 
-export function getSizeParams(): N2
+export function getSizeParams(): N2 | null
 {
-    const defValue: N2 = [500, 800];
     const paramsElement = (document.getElementById("sizeParams") as HTMLInputElement)!;
     let ps: N2;
     try {
@@ -12,54 +12,57 @@ export function getSizeParams(): N2
             "; return [W, H]" 
         ))();
     } catch {
-        return errMesage("Grammar error", defValue, paramsElement);
+        return errMesage("Grammar error", paramsElement);
     }
     // перевірки
     if (ps[0] == undefined || ps[0] <= 0) 
-        return errMesage("W: W > 0", defValue, paramsElement);
+        return errMesage("W: W > 0", paramsElement);
 
     if (ps[1] == undefined || ps[1] <= 0) 
-        return errMesage("H: H > 0", defValue, paramsElement);
+        return errMesage("H: H > 0", paramsElement);
 
     paramsElement.style.backgroundColor = "";
     return ps;
 }
 
 
-export function getSpaceParams(): [number, number, number, number]
+export function getSpaceParams(): N5 | null 
 {
-    const defValue: [number, number, number, number] = [0.5, 0.95, 100, 0.005];
     const paramsElement = (document.getElementById("spaceParams") as HTMLInputElement)!;
-    let ps: [number, number, number, number];
+    let ps: N5;
     try {
         ps = (new Function("", 
-            "let W, Wk, K, g;" + 
+            "let k, w, u, v, g ;" + 
             paramsElement.value + 
-            "; return [W, Wk, K, g]" 
+            "; return [k, w, u, v, g]" 
         ))();
     } catch {
-        return errMesage("Grammar error", defValue, paramsElement);
+        return errMesage("Grammar error", paramsElement);
     }
-    // перевірки
-    if (ps[0] == undefined || ps[0] <= 0 || ps[0] > 1 ) 
-        return errMesage("W: 0 < W < 1", defValue, paramsElement);
+    // validation
+    const [k, w, u, v, g] = ps;
 
-    if (ps[1] == undefined || undefined || ps[0] <= 0 || ps[0] > 1 ) 
-        return errMesage("Wk: 0 < Wk < 1", defValue, paramsElement);
+    if (k == undefined || k < 10 || k > 1000 )
+        return errMesage("k: 10 < k < 1000", paramsElement);
 
-    if (ps[2] == undefined || ps[2] <= 0 )
-        return errMesage("K: K > 0", defValue, paramsElement);
-
-    if (ps[3] == undefined )
-       ps[3] == 0;
-
+    if (w == undefined || w < 0 || w > 1 ) 
+        return errMesage("w: 0 <= w < 1", paramsElement);
+ 
+    if (u == undefined || u < 0 || u > 1 ) 
+        return errMesage("u: 0 <= u < 1", paramsElement);
+ 
+    if (v == undefined || v < 0 || v > 1 ) 
+        return errMesage("v: 0 <= v < 1", paramsElement);
+ 
+    if (g == undefined || g < -0.1 || g > 0.1 ) 
+        return errMesage("g: -0.1 < g < 0.1", paramsElement);
+ 
     paramsElement.style.backgroundColor = "";
     return ps;
 }
 
-export function getBallParams(): [number, number|undefined]
+export function getBallParams(): [number, number|undefined] | null
 {
-    const defValue: [number, number|undefined] = [1, undefined];
     const paramsElement = (document.getElementById("ballParams") as HTMLInputElement)!;
     let ps: [number, number|undefined];
     try {
@@ -69,17 +72,17 @@ export function getBallParams(): [number, number|undefined]
             "; return [st, m]" 
         ))();
     } catch {
-        return errMesage("Grammar error", defValue, paramsElement);
+        return errMesage("Grammar error", paramsElement);
     }
     // перевірки
     if ( !(ps[0] === 0 || ps[0] === 1) ) 
-        return errMesage("st: st = 0 | 1", defValue, paramsElement);
+        return errMesage("st: st = 0 | 1", paramsElement);
     
     paramsElement.style.backgroundColor = "";
     return ps;
 }
 
-export function getLinkParams(): [number]
+export function getLinkParams(): [number] | null
 {
     const defValue: [number] = [1];
     const paramsElement = (document.getElementById("ballParams") as HTMLInputElement)!;
@@ -91,20 +94,19 @@ export function getLinkParams(): [number]
             "; return [t]" 
         ))();
     } catch {
-        return errMesage("Grammar error", defValue, paramsElement);
+        return errMesage("Grammar error", paramsElement);
     }
     // перевірки
     if ( !(ps[0] === 0 || ps[0] === 1) ) 
-        return errMesage("t: t = 0 | 1", defValue, paramsElement);
+        return errMesage("t: t = 0 | 1", paramsElement);
     
     paramsElement.style.backgroundColor = "";
     return ps;
 }
 
 
-
-function errMesage(mes: string, defValue: any, el: HTMLInputElement) {
+function errMesage(mes: string, el: HTMLInputElement) {
     alert (mes);
     el.style.backgroundColor = "pink";
-    return defValue;
+    return null;
 }
