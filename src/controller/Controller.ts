@@ -362,12 +362,10 @@ export class Controller
         }
     }
 
-
-
-//---------------------- auxilary -----------------------
-
-
 }
+
+//---------------------- utils -----------------------
+
 
 function cursorPoint(event: MouseEvent) {
     const canvasRect = doc.canvas.getBoundingClientRect();
@@ -378,10 +376,10 @@ function cursorPoint(event: MouseEvent) {
 }
 
 
-
 function takeFocusOff() {
     doc.canvas.focus();
 }
+
 
 function sceneToJson(space: Space): string {
         space.balls.forEach(b => {b.space = null; b.clearDots();});
@@ -396,32 +394,30 @@ function sceneToJson(space: Space): string {
         let json = JSON.stringify(obj);
         space.balls.forEach(b => b.space = space);  
         return json; 
-    
-
 }
 
 function restoreSceneFromJson(json: string, space: Space): void 
-    {
-        const obj = JSON.parse(json);
-        // restore balls
-        space.balls = obj.balls.map((b: any) => new Ball(b.x, b.y, b.radius, b.color, b.vx, b.vy,  b.is_stone,  b.m, ));
-        space.balls.forEach(b => b.space = space);
+{
+    const obj = JSON.parse(json);
+    // restore balls
+    space.balls = obj.balls.map((b: any) => new Ball(b.x, b.y, b.radius, b.color, b.vx, b.vy,  b.is_stone,  b.m, ));
+    space.balls.forEach(b => b.space = space);
 
-        // restore lines
-        space.lines = obj.lines.map((l: any) => new Line(l.x1, l.y1, l.x2, l.y2));
-        // restore links
-        space.links = [];
-        obj.links.forEach((arr: number[]) => {
-            let b1 = space.ballUnderPoint({ x: arr[0], y: arr[1] });
-            let b2 = space.ballUnderPoint({ x: arr[2], y: arr[3] });
-            if (b1 && b2) {
-                space.links.push(new Link(b1, b2));
-            }
-        });
-        // restore globals
-        glo.g = obj.g;
-        glo.W = obj.W;
-        glo.Wk = obj.Wk;
-        glo.Vis = obj.Vis;
-        glo.K = obj.K;
-    }
+    // restore lines
+    space.lines = obj.lines.map((l: any) => new Line(l.x1, l.y1, l.x2, l.y2));
+    // restore links
+    space.links = [];
+    obj.links.forEach((arr: number[]) => {
+        let b1 = space.ballUnderPoint({ x: arr[0], y: arr[1] });
+        let b2 = space.ballUnderPoint({ x: arr[2], y: arr[3] });
+        if (b1 && b2) {
+            space.links.push(new Link(b1, b2));
+        }
+    });
+    // restore globals
+    glo.g = obj.g;
+    glo.W = obj.W;
+    glo.Wk = obj.Wk;
+    glo.Vis = obj.Vis;
+    glo.K = obj.K;
+}
