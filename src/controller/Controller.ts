@@ -28,6 +28,7 @@ export class Controller
         this.createMode = CreateMode.Ball;
         //
         this.addEventHandlers();
+        this.addDataEventHandlers() 
     }
 
     addEventHandlers() 
@@ -123,8 +124,24 @@ export class Controller
                     break;
             }
         });
-    }
 
+
+    }
+    
+    addDataEventHandlers() 
+    {
+        const el = <HTMLTextAreaElement>document.getElementById("savedSceneArea"); 
+
+        document.getElementById("saveSceneButton")!.addEventListener("click", () => {
+            el.value = sceneToJson(this.space);
+        });
+
+        document.getElementById("loadSceneButton")!.addEventListener("click", () => {
+            let space = jsonToScene(el.value);
+
+            this.view.drawAll();
+        });
+    }
 
 
     setSize(w: number, h: number) {
@@ -270,12 +287,10 @@ export class Controller
 
         doc.canvas.onmousedown = (e) => {
             p0 = this.cursorPoint(e);
-            // let line: Line | null = null;
             let line = this.space.lineUnderPoint(p0);
             if (line) {
                 this.space.selLine = line;
-            }
-               
+            }         
         };
 
         doc.canvas.onmousemove = (e) => {
@@ -315,16 +330,21 @@ export class Controller
             let ball = this.space.ballUnderPoint(p);
 
             if (ball === null || ball === lastClickedBall) {
-
-                let link: Link|null = null;
+                const link = this.space.linkUnderPoint(p);
+                if (link) {
+                    this.space.selLink = link;
+                    this.view.drawAll();
+                    return;
+                }
                 return;
             }
             if (lastClickedBall === null) {
                 lastClickedBall = ball;
                 return;
             }
+            
 
-            let link = new Link(lastClickedBall, ball);
+            const link = new Link(lastClickedBall, ball);
             this.space.addLink(link);
             this.space.selLink = link;
             lastClickedBall = null;
@@ -356,4 +376,24 @@ export class Controller
 
 function takeFocusOff() {
     doc.canvas.focus();
+}
+
+function sceneToJson(space: Space): string {
+        space.balls.forEach(b => {b.box = null; b.clearDots();});
+        let obj = {
+            balls: space.balls.map(b => 
+               ({x: b.x, y: b.y, vx: b.vx, vy: b.vy, m: b.m, radius: b.radius, color: b.color, is_stone: b.is_stone}) ),
+            lines: space.lines,
+            links: space.links.map(l => 
+                [l.b1.x, l.b1.y, l.b2.x, l.b2.y]),
+            g: glo.g, W: glo.W, Wk: glo.Wk, Vis: glo.Vis, K: glo.K, 
+        };
+        let json = JSON.stringify(obj);
+        space.balls.forEach(b => b.box = space);  
+        return json; 
+    
+
+}
+function jsonToScene(json: string): Space  {
+    return <Space>JSON.parse(json);
 }
