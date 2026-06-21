@@ -57,7 +57,7 @@ export class Space {
 //#region  Ball Suit
 
     addBall(b: Ball) {
-        b.box = this;
+        b.space = this;
         this.balls.push(b);
     }
 

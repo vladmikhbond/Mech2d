@@ -138,6 +138,7 @@ export class Controller
 
         document.getElementById("loadSceneButton")!.addEventListener("click", () => {
             restoreSceneFromJson(areaEl.value, this.space);
+            this.timeMode = TimeMode.Stop;
             this.view.drawAll();
         });
     }
@@ -296,7 +297,7 @@ export class Controller
 
 //#endregion  Mouse Handlers
 
-    //#region Mode props
+    //#region Mode props`
 
     set timeMode(mode: TimeMode) {
         if (mode === TimeMode.Play && this.intervalId === 0) {
@@ -383,7 +384,7 @@ function takeFocusOff() {
 }
 
 function sceneToJson(space: Space): string {
-        space.balls.forEach(b => {b.box = null; b.clearDots();});
+        space.balls.forEach(b => {b.space = null; b.clearDots();});
         let obj = {
             balls: space.balls.map(b => 
                ({x: b.x, y: b.y, vx: b.vx, vy: b.vy, m: b.m, radius: b.radius, color: b.color, is_stone: b.is_stone}) ),
@@ -393,7 +394,7 @@ function sceneToJson(space: Space): string {
             g: glo.g, W: glo.W, Wk: glo.Wk, Vis: glo.Vis, K: glo.K, 
         };
         let json = JSON.stringify(obj);
-        space.balls.forEach(b => b.box = space);  
+        space.balls.forEach(b => b.space = space);  
         return json; 
     
 
@@ -404,7 +405,7 @@ function restoreSceneFromJson(json: string, space: Space): void
         const obj = JSON.parse(json);
         // restore balls
         space.balls = obj.balls.map((b: any) => new Ball(b.x, b.y, b.radius, b.color, b.vx, b.vy,  b.is_stone,  b.m, ));
-        space.balls.forEach(b => b.box = space);
+        space.balls.forEach(b => b.space = space);
 
         // restore lines
         space.lines = obj.lines.map((l: any) => new Line(l.x1, l.y1, l.x2, l.y2));

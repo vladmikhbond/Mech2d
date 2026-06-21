@@ -27,7 +27,7 @@ export class Ball
     m: number;
     is_stone: boolean;
     
-    box: Space | null = null;
+    space: Space | null = null;
     ax = 0; 
     ay = 0;
     
@@ -52,7 +52,7 @@ export class Ball
         return b.m * (b.vx * b.vx + b.vy * b.vy) / 2;
     }
     get potEnergy() {
-        const b = this, h = b.box!.height - b.radius - b.y;   
+        const b = this, h = b.space!.height - b.radius - b.y;   
         return b.m * glo.g * h;    
     }
     get defEnergy() {
