@@ -57,7 +57,6 @@ export class Controller
         });  
 
 
-
         // Start-stop model time
         document.getElementById("runButton")!.addEventListener("click", () => 
         {

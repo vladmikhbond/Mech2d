@@ -16,7 +16,7 @@
           <span id="info"> </span> 
       </h1>
       <!------------------ top panel ---------------->
-      <div>
+      <section>
           <input id="sizeParams" type="text" value="W=800; H=400">
           <input id="spaceParams" type="text" value="k=100; w=0; u=0; v=0; g=0.005"  style="width: 350px;" >
 
@@ -33,10 +33,15 @@
 
           <button id="runButton" title="Run | Stop">Run</button>
           <button id="helpButton" title="Help" class="outline">H</button>
-
-          <input id="prettyModeCb" type="checkbox" checked title="pretty mode"> 
-          <input id="traceModeCb" type="checkbox" checked title="trace mode"> 
-      </div>
+      </section>
+      <section>  
+          <label> Pretty
+            <input id="prettyModeCb" type="checkbox" title="pretty mode"> 
+          </label>
+          <label> Trace
+            <input id="traceModeCb" type="checkbox" title="trace mode"> 
+          </label>           
+      </section>
 
       <!-- ------------------canvases------------------  -->
       <div class="canvas-frame">

@@ -9,6 +9,7 @@ select,
 button  {
     vertical-align: top;
     font-size: 0.9rem;
+    margin-bottom: 0;
 }
 
 
@@ -47,6 +48,12 @@ select {
 #time, #info {
     font-size: large;
     margin-left: 50px;
+}
+label {
+    display: inline;
+}
+section {
+    margin-bottom: 6px;
 }
 
 /* <!------------------ canvases ----------------> */
