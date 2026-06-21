@@ -8,9 +8,11 @@ npm run build
 
 
 
------------Встановлення на nginx (запит: https://tss.co.ua/waves2d/dist/)
+-----------Встановлення на nginx (запит: https://tss.co.ua/mech2d/)
 
-scp -r "C:\Git\TS\Waves2d\dist" vmbo@192.168.0.101:/tmp/
-ssh vmbo@192.168.0.101 
-sudo rm -rf /var/www/html/waves2d/dist
-sudo mv /tmp/dist /var/www/html/waves2d/
+scp -r "C:\Git\TS\Mech2d\dist" vmbo@192.168.0.101:/tmp/mech2d
+ssh -t vmbo@192.168.0.101 "sudo rm -rf /var/www/html/mech2d && sudo mv /tmp/mech2d /var/www/html/mech2d"
+
+scp -r "C:\Git\TS\Waves2d\dist" vmbo@192.168.0.101:/tmp/waves2d
+ssh -t vmbo@192.168.0.101 "sudo rm -rf /var/www/html/waves2d && sudo mv /tmp/waves2d /var/www/html/waves2d"
+
