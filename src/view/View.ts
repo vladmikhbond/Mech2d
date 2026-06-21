@@ -11,11 +11,16 @@ export class View
 
     private space: Space;
 
-    public prettyMode = PrettyMode.Beauty;
-    public traceMode = TraceMode.Yes;
+    public prettyMode: PrettyMode;
+    public traceMode: TraceMode;
 
     constructor(box: Space) {
         this.space = box;
+        // modes from index.html
+        let el = <HTMLInputElement>document.getElementById("prettyModeCb");
+        this.prettyMode = el.checked ? PrettyMode.Beauty : PrettyMode.Draft;
+        el = <HTMLInputElement>document.getElementById("traceModeCb");
+        this.traceMode = el.checked ? TraceMode.Yes : TraceMode.No;
     }
 
     clearTrace() {

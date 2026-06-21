@@ -19,6 +19,15 @@ export class Space {
     selLine: Line | null = null;
     selLink: Link | null = null;
 
+    deleteSelected(mode: CreateMode) {
+        if (mode == CreateMode.Ball && this.selBall) 
+            this.deleteBall(this.selBall);
+        if (mode == CreateMode.Line && this.selLine)
+            this.deleteLine(this.selLine);
+        if (mode == CreateMode.Link && this.selLink)
+            this.deleteLink(this.selLink);
+    }
+
     constructor(w: number, h: number) {
         this.setSize(w, h);  
     }

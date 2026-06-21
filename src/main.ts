@@ -4,13 +4,12 @@ import { View } from "./view/View.js";
 import { Controller } from "./controller/Controller.js";
 import { getSizeParams, getSpaceParams } from "./controller/params.js";
 
-const ps = getSpaceParams()!;              
-[glo.K, glo.W, glo.Wk, glo.Vis, glo.g] = ps; 
+// params from index.html              
+[glo.K, glo.W, glo.Wk, glo.Vis, glo.g] = getSpaceParams()!; 
 
-const size = getSizeParams()!
-const space = new Space(...size);
+const space = new Space(...getSizeParams()!);
 
 const view = new View(space);
-const c = new Controller(space, view);
+new Controller(space, view);
 
 view.drawAll();

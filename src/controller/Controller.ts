@@ -117,9 +117,15 @@ export class Controller
                     this.timeMode = TimeMode.Stop;
                     this.step();
                     break;
+                case 'Delete':
+                    this.space.deleteSelected(this.createMode);
+                    this.view.drawAll();
+                    break;
             }
         });
     }
+
+
 
     setSize(w: number, h: number) {
         document.documentElement.style.setProperty('--canvas-width', w+'px');
