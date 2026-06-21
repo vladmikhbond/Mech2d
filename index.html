@@ -17,7 +17,7 @@
       </h1>
       <!------------------ top panel ---------------->
       <section>
-          <input id="sizeParams" type="text" value="W=800; H=400">
+          <input id="sizeParams" type="text" value="W=1024; H=700">
           <input id="spaceParams" type="text" value="k=100; w=0; u=0; v=0; g=0.005"  style="width: 350px;" >
 
           <select id="createMode" aria-label="Select" required>
@@ -34,7 +34,8 @@
           <button id="runButton" title="Run | Stop">Run</button>
           <button id="helpButton" title="Help" class="outline">H</button>
       </section>
-      <section>  
+      
+      <section> 
           <label> Pretty
             <input id="prettyModeCb" type="checkbox" title="pretty mode"> 
           </label>
@@ -45,15 +46,15 @@
 
       <!-- ------------------canvases------------------  -->
       <div class="canvas-frame">
-        <canvas id="canvas2" width="800" height="600" class="canvas-item" tabindex="0"></canvas>
-        <canvas id="canvas" width="800" height="600" class="canvas-item"></canvas>
+        <canvas id="canvas2" class="canvas-item" tabindex="0"></canvas>
+        <canvas id="canvas" class="canvas-item"></canvas>
       </div>
 
       <!-- ------------------bottom panel------------------  -->
       <div class="bottom-panel">
-        <button id="saveSceneButton" class="scene-btn" title="Export scene">S</button>
+        <button id="saveSceneButton" class="scene-btn" title="Export scene">⬇</button>
         <textarea id="savedSceneText" rows="1" class="scene-textarea"></textarea>
-        <button id="loadSceneButton" class="scene-btn" title="Import scene">L</button>
+        <button id="loadSceneButton" class="scene-btn" title="Import scene">⬆</button>
       </div>
  
       <img src="./assets/redBall.png" id="redBallImg" width="523" height="520" style="display: none;" />
@@ -65,10 +66,3 @@
   </div>
 </body>
 </html>
-
-
-
-<!---------------------- top panel ---------------------->
-
-
-

@@ -1,7 +1,5 @@
 TODO
 
-збереження сцен
-select link with the mouse
 
 ---- налагодження
 npm run build

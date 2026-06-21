@@ -87,7 +87,10 @@ section {
 .scene-textarea {
     display: inline; 
     height: var(--element-height);
+    width: calc(var(--canvas-width) - 154px);
 }
 .scene-btn {
     vertical-align: top; 
+    background-color: lightblue;
+    width: 70px;
 }
