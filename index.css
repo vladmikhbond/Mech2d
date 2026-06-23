@@ -4,58 +4,53 @@
     --element-height: 50px;
 }
 
-input[type=text],
+
+/* <!------------------ top panel ----------------> */
+input[type="text"],
 select,
-button  {
+button {
     vertical-align: top;
     font-size: 0.9rem;
     margin-bottom: 0;
+    height: var(--element-height);
 }
 
-
-
-/* <!------------------ top panel ----------------> */
-
 select,
-button,
-input[type=checkbox]
- {
-    background-color:rgb(42, 111, 113);
+button {
+    background-color: rgb(42, 111, 113);
     padding-top: 8px;
 }
 
-button {
-    height: var(--element-height);
-    
-}
-#helpButton {
-        background-color: lightblue;
+input[type="checkbox"] {
+    background-color: rgb(42, 111, 113);
 }
 
-input[type=text] {
-    width: 200px ;
-    height: var(--element-height);
+input[type="text"] {
+    width: 200px;
 }
 
 select {
     width: 120px;
-    height: var(--element-height);
-    padding-top: 8px;
-    
     color: white;
 }
 
-#time, #info {
-    font-size: large;
-    margin-left: 50px;
+#helpButton {
+    background-color: lightblue;
 }
+
+#time,
+#info {
+    margin-left: 50px;
+    font-size: large;
+}
+
 label {
     display: inline;
 }
+
 section {
     margin-bottom: 6px;
 }
-
 /* <!------------------ canvases ----------------> */
 
 .canvas-frame {
