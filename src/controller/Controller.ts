@@ -15,7 +15,7 @@ export class Controller
     public view: View;
 
     private intervalId = 0;   // base field for timeMode property
-    private sceneJson = ""; 
+
     private _mousePos = new Point(0, 0);
     private _createMode = CreateMode.Ball;
 
